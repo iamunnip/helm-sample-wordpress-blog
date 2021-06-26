@@ -1,0 +1,17 @@
+# wordpress-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.wordpressService.serviceName }}
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    tier: {{ .Values.wordpressPod.tier }}
+spec:
+  type: {{ .Values.wordpressService.type }}
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: {{ .Values.wordpressService.nodePort }}
+  selector:
+    tier: {{ .Values.wordpressPod.tier }}

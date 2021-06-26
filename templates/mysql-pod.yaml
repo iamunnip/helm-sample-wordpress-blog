@@ -1,0 +1,25 @@
+# mysql-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.mysqlPod.podName }}
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    tier: {{ .Values.mysqlPod.tier }}
+spec:
+  containers:
+    - name: {{ .Values.mysqlPod.containerName }}
+      image: {{ .Values.mysqlPod.image }}:{{ .Values.mysqlPod.tag }}
+      imagePullPolicy: {{ .Values.pullPolicy }}
+      ports:
+        - containerPort: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.secretName }}
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          value: {{ .Values.mysqlPod.database }}
+  restartPolicy: {{ .Values.restartPolicy }}

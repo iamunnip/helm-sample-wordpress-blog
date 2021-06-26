@@ -1,0 +1,9 @@
+# namespace.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace.name }}
+  labels:
+    app: {{ .Values.namespace.app }}
+    db: {{ .Values.namespace.db }}

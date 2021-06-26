@@ -1,0 +1,16 @@
+# mysql-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mysqlService.serviceName }}
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    tier: {{ .Values.mysqlPod.tier }}
+spec:
+  type: {{ .Values.mysqlService.type }}
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    tier: {{ .Values.mysqlPod.tier }}

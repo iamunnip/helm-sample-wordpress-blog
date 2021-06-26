@@ -1,0 +1,29 @@
+# wordpress-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.wordpressPod.podName }}
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    tier: {{ .Values.wordpressPod.tier }}
+spec:
+  containers:
+    - name: {{ .Values.wordpressPod.containerName }}
+      image: {{ .Values.wordpressPod.image }}:{{ .Values.wordpressPod.tag }}
+      imagePullPolicy: {{ .Values.pullPolicy }}
+      ports:
+        - containerPort: 80
+      env:
+        - name: WORDPRESS_DB_HOST
+          value: {{ .Values.mysqlService.serviceName }}
+        - name: WORDPRESS_DB_USER
+          value: {{ .Values.mysqlPod.user }}
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.secretName }}
+              key: MYSQL_ROOT_PASSWORD
+        - name: WORDPRESS_DB_NAME
+          value: {{ .Values.mysqlPod.database }}
+  restartPolicy: {{ .Values.restartPolicy }}

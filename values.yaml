@@ -1,0 +1,38 @@
+# values.yaml
+
+namespace:
+  name: wordpress-blog
+  app: wordpress
+  db: mysql
+
+secret:
+  secretName: credentials
+  mysqlRootPassword: ZGItcGFzc3dvcmQ=
+
+wordpressPod:
+  podName: wordpress
+  tier: frontend
+  containerName: wordpress
+  image: wordpress
+  tag: 5.7.2
+
+wordpressService:
+  serviceName: wordpress
+  type: NodePort
+  nodePort: 30001
+
+mysqlPod:
+  podName: mysql
+  tier: backend
+  containerName: mysql
+  image: mysql
+  tag: 8.0.25
+  user: root
+  database: wordpress
+
+mysqlService:
+  serviceName: mysql
+  type: ClusterIP
+
+pullPolicy: IfNotPresent
+restartPolicy: Always
