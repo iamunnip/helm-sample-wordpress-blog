@@ -1,6 +1,10 @@
 # Chart.yaml
 
+apiVersion: v2
 name: sample-wordpress-blog
 description: A sample helm chart for deploying wordpress blog
 version: 0.1
 appVersion: 0.1
+keywords:
+  - wordpress
+  - mysql
